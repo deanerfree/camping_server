@@ -1,9 +1,16 @@
-const { getData } = require("../data")
+const { getData, getParkData } = require("../data")
 // var util = require("util")
 // const fs = require("fs")
 const { Campground } = require("../model/Campground")
+const {
+	getListOfEachPark,
+	getLongitude,
+	getLatitude,
+	parksWthCmpGrnds,
+} = require("../functions/helperFunctions")
 
 let cleanedMapData = []
+let organizedMapData = []
 
 // console.log("data brought in", uncleanedData)
 const cleanData = (dataList) => {
@@ -22,18 +29,32 @@ const cleanData = (dataList) => {
 		)
 		cleanedMapData.push(campgroundLocation)
 	})
+	organizedMapData.push(
+		getListOfEachPark(cleanedMapData),
+		getLatitude(cleanedMapData),
+		getLongitude(cleanedMapData)
+	)
 
-	return cleanedMapData
+	return organizedMapData
 }
 
 const getCampsiteData = async (req, res) => {
-	if (cleanedMapData.length <= 0) {
+	if (organizedMapData.length <= 0) {
 		console.log("no data")
-		uncleanedData = await getData()
-		cleanedMapData = cleanData(uncleanedData)
+		let uncleanedData = await getData()
+		cleanData(uncleanedData)
+		// console.log(organizedMapData)
 	}
+	console.log("data")
 
-	res.send({ cleanedMapData })
+	res.send({ organizedMapData })
 }
 
-module.exports = { getCampsiteData }
+const getNationalParkData = async (req, res) => {
+	let initialParkData = await getParkData()
+	let initialCampsiteData = await getData()
+	let filteredData = parksWthCmpGrnds(initialParkData, initialCampsiteData)
+	console.log("what's sent", typeof filteredData)
+	res.send({ filteredData })
+}
+module.exports = { getCampsiteData, getNationalParkData }
