@@ -66,6 +66,7 @@ const getMaxandMin = (dataList) => {
 	return values
 }
 
+// Function that removes duplicate data from a list of objects taking an array and whatever key of object you want to filter
 const removeDuplicates = (array, arg) => {
 	const filteredArray = array.filter((obj, index, arr) => {
 		return arr.map((mapObj) => mapObj[arg]).indexOf(obj[arg]) === index
@@ -73,6 +74,7 @@ const removeDuplicates = (array, arg) => {
 	return filteredArray
 }
 
+//Gets a collection of parks with campgrounds, removes duplicates, adds each campground to each park
 const parksWthCmpGrnds = (ntnlPrks, cmpgrnds) => {
 	let matchedList = []
 	ntnlPrks.forEach((park) => {
@@ -84,6 +86,14 @@ const parksWthCmpGrnds = (ntnlPrks, cmpgrnds) => {
 	})
 
 	const filteredList = removeDuplicates(matchedList, "id")
+	filteredList.map((park) => {
+		park.campground = []
+		cmpgrnds.forEach((camp) => {
+			if (park.parkCode === camp.parkCode) {
+				park.campground.push(camp)
+			}
+		})
+	})
 	return filteredList
 }
 

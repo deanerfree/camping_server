@@ -2,6 +2,8 @@ const axios = require("axios")
 const dotenv = require("dotenv")
 
 dotenv.config()
+
+//Get the campground data
 const getData = async () => {
 	let dataList = []
 	//US longitude data should be negative
@@ -20,6 +22,7 @@ const getData = async () => {
 	}
 }
 
+//Get the national park data
 const getParkData = async () => {
 	let dataList = []
 	//US longitude data should be negative

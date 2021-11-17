@@ -54,7 +54,8 @@ const getNationalParkData = async (req, res) => {
 	let initialParkData = await getParkData()
 	let initialCampsiteData = await getData()
 	let filteredData = parksWthCmpGrnds(initialParkData, initialCampsiteData)
-	console.log("what's sent", typeof filteredData)
+
+	// console.log("what's sent", filteredData)
 	res.send({ filteredData })
 }
 module.exports = { getCampsiteData, getNationalParkData }

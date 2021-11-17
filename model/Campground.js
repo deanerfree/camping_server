@@ -9,7 +9,8 @@ let Campground = class {
 		latitude,
 		longitude,
 		images,
-		parkCode
+		parkCode,
+		campground
 	) {
 		this.id = id
 		this.name = name
@@ -22,6 +23,7 @@ let Campground = class {
 		this.coordinates = { latitude: this.latitude, longitude: this.longitude }
 		this.images = images
 		this.parkCode = parkCode
+		this.campground = [campground]
 	}
 }
 
