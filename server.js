@@ -11,6 +11,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1", routes)
 
-app.listen(process.env.PORT || 4001, () => {
-	console.log(`You are connected to ${process.env.PORT || 4001}`)
+app.listen(4001, process.env.PORT, () => {
+	console.log(`You are connected to ${process.env.PORT}`)
 })
