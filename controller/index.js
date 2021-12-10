@@ -62,6 +62,10 @@ const getNationalParkData = async (req, res) => {
 	res.send({ filteredData })
 }
 
+const getCampgrounds = async (req, res) => {
+	const initialCampsiteData = await getData()
+	res.send({ initialCampsiteData })
+}
 const getNationalParkImageData = async (req, res) => {
 	const initialParkData = await getParkData()
 	const images = getListOfImageUrls(initialParkData)
@@ -76,6 +80,7 @@ const getCampgroundImageData = async (req, res) => {
 
 module.exports = {
 	getCampsiteData,
+	getCampgrounds,
 	getNationalParkData,
 	getNationalParkImageData,
 	getCampgroundImageData,
