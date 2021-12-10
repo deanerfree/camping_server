@@ -29,37 +29,6 @@ const addCampgroundDataToPark = (dataList, listOfParks) => {
 	return listOfParks
 }
 
-const getLatitude = (dataList) => {
-	// console.log("what", dataList)
-	let latitudeList = []
-
-	dataList.forEach((dataPoint) => {
-		if (dataPoint.latitude === undefined) {
-			return
-		}
-		latitudeList.push(dataPoint.latitude)
-	})
-	let latValues = getMaxandMin(latitudeList)
-	return latValues
-}
-//Get a list of the Longitudes then return the Max and Min values
-const getLongitude = (dataList) => {
-	let longitudeList = []
-	// console.log("thing", dataList)
-	dataList.forEach((dataPoint) => {
-		if (dataPoint.longitude === undefined) {
-			return
-		}
-		if (dataPoint.longitude > 0) {
-			dataPoint.longitude = dataPoint.longitude * -1
-		}
-		// console.log(longitudeList)
-		longitudeList.push(dataPoint.longitude)
-	})
-	let longValues = getMaxandMin(longitudeList)
-	return longValues
-}
-
 const getMaxandMin = (dataList) => {
 	let values = { max: Math.max(...dataList), min: Math.min(...dataList) }
 
@@ -97,9 +66,26 @@ const parksWthCmpGrnds = (ntnlPrks, cmpgrnds) => {
 	return filteredList
 }
 
+//Create list of image urls for Parks
+
+const getListOfImageUrls = (dataList) => {
+	const imageUrlsList = []
+	const locationImage = {}
+	dataList.map((item) => {
+		locationImage.name = item.name
+		locationImage.images = item.images.map((image) => {
+			return image
+		})
+		imageUrlsList.push(locationImage)
+	})
+	return imageUrlsList
+}
+
+// Create list of image url's for campgrounds
+
 module.exports = {
 	getListOfEachPark,
-	getLongitude,
-	getLatitude,
 	parksWthCmpGrnds,
+	getMaxandMin,
+	getListOfImageUrls,
 }

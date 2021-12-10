@@ -4,10 +4,13 @@ const { getData, getParkData } = require("../data")
 const { Campground } = require("../model/Campground")
 const {
 	getListOfEachPark,
+	parksWthCmpGrnds,
+	getListOfImageUrls,
+} = require("../functions/helperFunctions")
+const {
 	getLongitude,
 	getLatitude,
-	parksWthCmpGrnds,
-} = require("../functions/helperFunctions")
+} = require("../functions/coordinateFunctions")
 
 let cleanedMapData = []
 let organizedMapData = []
@@ -51,11 +54,29 @@ const getCampsiteData = async (req, res) => {
 }
 
 const getNationalParkData = async (req, res) => {
-	let initialParkData = await getParkData()
-	let initialCampsiteData = await getData()
-	let filteredData = parksWthCmpGrnds(initialParkData, initialCampsiteData)
+	const initialParkData = await getParkData()
+	const initialCampsiteData = await getData()
+	const filteredData = parksWthCmpGrnds(initialParkData, initialCampsiteData)
+	// const images = getListOfParkImageUrls(filteredData)
 
-	// console.log("what's sent", filteredData)
 	res.send({ filteredData })
 }
-module.exports = { getCampsiteData, getNationalParkData }
+
+const getNationalParkImageData = async (req, res) => {
+	const initialParkData = await getParkData()
+	const images = getListOfImageUrls(initialParkData)
+	res.send({ images })
+}
+
+const getCampgroundImageData = async (req, res) => {
+	const initialParkData = await getData()
+	const images = getListOfImageUrls(initialParkData)
+	res.send({ images })
+}
+
+module.exports = {
+	getCampsiteData,
+	getNationalParkData,
+	getNationalParkImageData,
+	getCampgroundImageData,
+}
